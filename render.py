@@ -386,8 +386,9 @@ def scene_drone(d, box):
         d.line([(x0 + 150 + (yy - y0) * 0.12, yy),
                 (x0 + 150 + (yy - y0) * 0.12, yy + 6)], fill=GOLD_L, width=2)
     # drone silhouette with a red trail: slim fuselage, swept delta wings
+    # (trail kept high and short so it stays well clear of the caption row)
     cx, cy = x0 + 205, y0 + 34
-    d.line([(cx - 78, cy + 20), (cx - 8, cy + 2)], fill=RED, width=2)
+    d.line([(cx - 78, cy + 6), (cx - 8, cy - 2)], fill=RED, width=2)
     d.polygon([(cx - 24, cy - 3), (cx + 24, cy - 2), (cx + 28, cy + 1),
                (cx + 24, cy + 3), (cx - 24, cy + 3)], fill=(28, 28, 28))
     d.polygon([(cx - 6, cy - 2), (cx + 6, cy - 2), (cx + 16, cy - 16),
@@ -397,8 +398,8 @@ def scene_drone(d, box):
     d.polygon([(cx - 22, cy - 2), (cx - 16, cy - 2), (cx - 20, cy - 12),
                (cx - 24, cy - 10)], fill=(28, 28, 28))
     d.ellipse([cx - 3, cy - 3, cx + 3, cy + 3], fill=RED)
-    # siren arcs over Lublin
-    sx, sy = x0 + 52, y0 + 66
+    # siren arcs over Lublin (kept high so the red dot clears the caption)
+    sx, sy = x0 + 48, y0 + 50
     for r in (10, 18, 26):
         d.arc([sx - r, sy - r, sx + r, sy + r], 200, 340, fill=GOLD_L, width=3)
     d.ellipse([sx - 5, sy - 5, sx + 5, sy + 5], fill=RED)
@@ -413,9 +414,10 @@ def scene_chart(d, box):
     d.rectangle(box, fill=(16, 48, 32))
     for gy in range(y0 + 44, y1 - 16, 14):
         d.line([(x0 + 8, gy), (x1 - 8, gy)], fill=(38, 74, 52), width=1)
-    pts = [(x0 + 12, y1 - 28), (x0 + 60, y1 - 38), (x0 + 105, y1 - 34),
-           (x0 + 150, y1 - 46), (x0 + 195, y1 - 44), (x0 + 240, y1 - 58),
-           (x1 - 14, y1 - 64)]
+    # chart line lowered 5px so it sits clearly below the TAIWAN label
+    pts = [(x0 + 12, y1 - 23), (x0 + 60, y1 - 33), (x0 + 105, y1 - 29),
+           (x0 + 150, y1 - 41), (x0 + 195, y1 - 39), (x0 + 240, y1 - 53),
+           (x1 - 14, y1 - 59)]
     d.line(pts, fill=(90, 220, 130), width=4)
     for px, py in pts:
         d.ellipse([px - 4, py - 4, px + 4, py + 4], fill=(90, 220, 130))
@@ -428,9 +430,10 @@ def scene_chart(d, box):
 def scene_chess(d, box):
     x0, y0, x1, y1 = box
     d.rectangle(box, fill=(58, 40, 28))
-    # 8x8 board on the left
-    bs = 11
-    bx, by = x0 + 10, y0 + 6
+    # 8x8 board on the left (9px cells so the board stays inside the
+    # picture box and cannot paint over the header line below it)
+    bs = 9
+    bx, by = x0 + 10, y0 + 4
     for r in range(8):
         for c in range(8):
             col = (235, 225, 200) if (r + c) % 2 == 0 else (52, 58, 74)
@@ -442,25 +445,25 @@ def scene_chess(d, box):
                   outline=GOLD_L, width=2)
         d.rectangle([kx - 3, y0 + 10, kx + 3, y0 + 24], fill=col)
         d.rectangle([kx - 9, y0 + 15, kx + 9, y0 + 21], fill=col)
-    d.text((x0 + 128, y0 + 58), "20  vs  20", font=sans_b(15), fill=WHITE)
-    d.text((x0 + 128, y0 + 78), "GAME 1 \u00b7 TODAY", font=sans_b(10),
+    d.text((x0 + 128, y0 + 56), "20  vs  20", font=sans_b(15), fill=WHITE)
+    d.text((x0 + 128, y0 + 70), "GAME 1 \u00b7 TODAY", font=sans_b(10),
            fill=GOLD_L)
 
 
 def scene_jet(d, box):
     x0, y0, x1, y1 = box
     d.rectangle(box, fill=(70, 110, 150))
-    d.ellipse([x0 + 130, y0 + 4, x0 + 190, y0 + 40], fill=(235, 240, 245))
-    # F-15K silhouette
-    d.polygon([(x0 + 14, y0 + 30), (x0 + 90, y0 + 22), (x0 + 150, y0 + 26),
-               (x0 + 96, y0 + 34), (x0 + 30, y0 + 38)], fill=(40, 48, 60))
-    d.polygon([(x0 + 60, y0 + 22), (x0 + 78, y0 + 8), (x0 + 84, y0 + 24)],
+    d.ellipse([x0 + 130, y0 + 4, x0 + 186, y0 + 40], fill=(235, 240, 245))
+    # F-15K silhouette (kept above the caption row)
+    d.polygon([(x0 + 14, y0 + 26), (x0 + 90, y0 + 18), (x0 + 150, y0 + 22),
+               (x0 + 96, y0 + 30), (x0 + 30, y0 + 34)], fill=(40, 48, 60))
+    d.polygon([(x0 + 60, y0 + 18), (x0 + 78, y0 + 4), (x0 + 84, y0 + 20)],
               fill=(40, 48, 60))
-    # phone with an emergency alert
-    d.rounded_rectangle([x0 + 118, y0 + 12, x0 + 176, y0 + 46],
+    # phone with an emergency alert (moved up so it cannot cover the caption)
+    d.rounded_rectangle([x0 + 120, y0 + 4, x0 + 178, y0 + 30],
                         radius=4, fill=(250, 250, 250), outline=RED, width=2)
-    d.text((x0 + 147, y0 + 16), "!", font=sans_b(16), fill=RED, anchor="ma")
-    d.text((x0 + 147, y0 + 33), "SHELTER", font=sans_b(7), fill=RED,
+    d.text((x0 + 149, y0 + 5), "!", font=sans_b(13), fill=RED, anchor="ma")
+    d.text((x0 + 149, y0 + 19), "SHELTER", font=sans_b(7), fill=RED,
            anchor="ma")
     d.text((x0 + 10, y1 - 14), "9,000 TOLD TO SHELTER", font=sans_b(9),
            fill=WHITE)
@@ -487,14 +490,14 @@ def scene_pacific(d, box):
 def scene_rocket(d, box):
     x0, y0, x1, y1 = box
     d.rectangle(box, fill=(14, 20, 44))
-    for sx, sy in ((30, 10), (70, 6), (120, 12), (160, 8), (60, 40), (150, 44)):
+    for sx, sy in ((30, 10), (70, 6), (120, 12), (160, 8), (58, 30), (150, 44)):
         d.ellipse([x0 + sx, y0 + sy, x0 + sx + 2, y0 + sy + 2], fill=WHITE)
-    # Long March rocket
+    # Long March rocket (shortened so body + flame end above the caption)
     rx = x0 + 42
-    d.rectangle([rx, y0 + 10, rx + 16, y0 + 40], fill=(230, 230, 230))
-    d.polygon([(rx, y0 + 10), (rx + 8, y0 + 1), (rx + 16, y0 + 10)],
+    d.rectangle([rx, y0 + 8, rx + 16, y0 + 28], fill=(230, 230, 230))
+    d.polygon([(rx, y0 + 8), (rx + 8, y0 + 1), (rx + 16, y0 + 8)],
               fill=RED)
-    d.polygon([(rx + 2, y0 + 40), (rx + 8, y0 + 48), (rx + 14, y0 + 40)],
+    d.polygon([(rx + 2, y0 + 28), (rx + 8, y0 + 33), (rx + 14, y0 + 28)],
               fill=(250, 180, 60))
     # Tiangong station
     d.rectangle([x0 + 100, y0 + 16, x0 + 170, y0 + 24], fill=(180, 190, 205))
@@ -512,9 +515,9 @@ def scene_citynight(d, box):
         for wy in range(y1 - bh + 4, y1 - 4, 8):
             d.rectangle([x0 + bx + 4, wy, x0 + bx + 10, wy + 4],
                         fill=(250, 210, 90))
-    # searchlight beams
-    d.polygon([(x0 + 60, y1), (x0 + 120, y0 + 6), (x0 + 132, y0 + 6),
-               (x0 + 78, y1)], fill=(250, 220, 120))
+    # searchlight beams (shifted right so the beam stays clear of the caption)
+    d.polygon([(x0 + 74, y1), (x0 + 134, y0 + 6), (x0 + 146, y0 + 6),
+               (x0 + 92, y1)], fill=(250, 220, 120))
     d.text((x0 + 10, y0 + 4), "ZAPORIZHZHIA", font=sans_b(9), fill=WHITE)
 
 
